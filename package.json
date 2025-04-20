@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "adm-zip": "^0.5.16",
-    "zotero-plugin-toolkit": "^5.0.0-0"
+    "zotero-plugin-toolkit": "^5.0.0-1"
   },
   "devDependencies": {
     "@eslint/js": "^9.24.0",
