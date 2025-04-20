@@ -1,0 +1,111 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+ # Zotero Context Menu Debugging Guide
+
+## Key Issues and Solutions
+
+1. When implementing context menu visibility in Zotero plugins, use `getVisibility` instead of `condition` for proper menu filtering.
+
+2. For attachment-specific menus, explicitly check the attachment type and return false for non-matching attachments:
+   ```typescript
+   // For direct attachments - only check specific types
+   if (items.length === 1 && items[0].isAttachment()) {
+     if (items[0].attachmentContentType === "application/zip") {
+       const fileName = items[0].getField("title") as string;
+       if (fileName.includes("Tex_Source.zip")) {
+         return true;
+       }
+     }
+     // Important: Explicitly return false for other attachment types
+     return false;
+   }
+   ```
+
+3. For parent items, check if they have attachments of the required type:
+   ```typescript
+   // For parent items - only show if they have specific attachments
+   for (const item of items) {
+     if (!item.isAttachment() && !item.isNote()) {
+       const attachmentIDs = item.getAttachments();
+       if (!attachmentIDs || attachmentIDs.length === 0) {
+         continue;
+       }
+       
+       // Check if any attachment matches the criteria
+       for (const attachmentID of attachmentIDs) {
+         const attachment = Zotero.Items.get(attachmentID);
+         if (attachment.isAttachment() && 
+             attachment.attachmentContentType === "application/zip") {
+           const fileName = attachment.getField("title") as string;
+           if (fileName.includes("Tex_Source.zip")) {
+             return true;
+           }
+         }
+       }
+     }
+   }
+   ```
+
+## Debugging Tips
+
+1. Always rebuild the plugin after making changes to menu visibility logic:
+   ```bash
+   npm run build
+   ```
+
+2. Look at reference implementations from other plugins if available.
+
+3. Compare your menu implementation with working examples:
+   - Check if using `getVisibility` vs `condition`
+   - Verify explicit returns for non-matching items
+   - Ensure proper handling of parent items vs attachments
+
+4. Test with various item selections to verify the menu appears only when expected.
+
+5. Remember that `getVisibility` receives `elem` and `event` parameters, while `condition` typically receives just `event`.
+
+## Complete Example
+
+```typescript
+ztoolkit.Menu.register("item", {
+  tag: "menuitem",
+  id: "zotero-item-menu-custom-action",
+  label: getString("menu-label"),
+  // Use getVisibility for proper menu filtering
+  getVisibility: (elem: any, ev: Event) => {
+    const items = Zotero.getActiveZoteroPane().getSelectedItems();
+    if (!items || items.length === 0) {
+      return false;
+    }
+    
+    // For direct attachments - only show for specific types
+    if (items.length === 1 && items[0].isAttachment()) {
+      if (items[0].attachmentContentType === "application/zip") {
+        const fileName = items[0].getField("title") as string;
+        if (fileName.includes("specific_pattern")) {
+          return true;
+        }
+      }
+      // Hide for any other attachment type
+      return false;
+    }
+    
+    // For parent items - only show if they have specific attachments
+    for (const item of items) {
+      if (!item.isAttachment() && !item.isNote()) {
+        // Additional logic for parent items
+        // ...
+      }
+    }
+    
+    return false;
+  },
+  commandListener: (event: Event) => {
+    // Command implementation
+  },
+  icon: `chrome://${addon.data.config.addonRef}/content/icons/icon.png`,
+});
+```

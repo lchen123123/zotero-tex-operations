@@ -1,0 +1,3 @@
+api.zotero.org:HSTS	1	20198	1776677589154,1,1
+repo.zotero.org:HSTS	1	20198	1776677589827,1,1
+www.zotero.org:HSTS	1	20198	1776630357004,1,1

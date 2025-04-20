@@ -1,14 +1,16 @@
 {
   "name": "zotero-tex-operations",
   "type": "module",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Zotero TeX Operations Plugin",
   "config": {
     "addonName": "Zotero TeX Operations",
     "addonID": "texoperations@zotero.plugin",
     "addonRef": "texoperations",
     "addonInstance": "TeXOperations",
-    "prefsPrefix": "extensions.zotero.texoperations"
+    "prefsPrefix": "extensions.zotero.texoperations",
+    "zoteroMinVersion": "7.0.0",
+    "zoteroMaxVersion": "7.0.*"
   },
   "repository": {
     "type": "git",
@@ -30,10 +32,12 @@
     "update-deps": "npm update --save"
   },
   "dependencies": {
+    "adm-zip": "^0.5.16",
     "zotero-plugin-toolkit": "^5.0.0-0"
   },
   "devDependencies": {
     "@eslint/js": "^9.24.0",
+    "@types/adm-zip": "^0.5.7",
     "@types/node": "^22.14.0",
     "eslint": "^9.24.0",
     "prettier": "^3.5.3",

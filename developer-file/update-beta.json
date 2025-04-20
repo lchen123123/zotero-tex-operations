@@ -1,0 +1,19 @@
+{
+  "addons": {
+    "texoperations@zotero.plugin": {
+      "updates": [
+        {
+          "version": "1.0.1",
+          "update_link": "https://github.com/lchen/zotero-tex-operations/releases/download/v1.0.1/zotero-te-x-operations.xpi",
+          "update_hash": "sha512:770b1dcfb5b649b72d138166bc7b5d5f443a60b890ce2b9402eca02169d74e596764e731e5b1b4c1154999afde287448aa4687dd91e6a91c447bd5a12a17277c",
+          "applications": {
+            "zotero": {
+              "strict_min_version": "6.999",
+              "strict_max_version": "7.*"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

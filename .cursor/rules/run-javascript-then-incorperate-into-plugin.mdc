@@ -1,0 +1,12 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+
+# Your rule content
+为了实现上述功能，首先写一个javascript脚本，可在Zotero JavaScript console 中运行。
+当测试运行成功后,我们再将这个javascript脚本集成到插件代码中去。 
+
+- You can @ files here
+- You can use markdown but dont have to
